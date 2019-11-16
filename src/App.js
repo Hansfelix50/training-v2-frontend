@@ -1,25 +1,32 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from 'react';
+import { Router } from "@reach/router"
+
+import Layout from './Layouts'
+
+import Home from './Views/Home'
+import Settings from "./Views/Settings"
+import List from './Views/List'
+
 
 function App() {
+  const [ name, setName ] = useState('Luis')
+
+  useEffect(() => {
+    console.log('Hola')
+  }, [])
+
+  useEffect(() => {
+    console.log('El nombre cambio')
+  }, [ name ])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Layout>
+      <Router>
+        <Home path="/"   />
+        <Settings path="settings" />
+        <List path='list'/>
+      </Router>
+    </Layout>
   );
 }
 
