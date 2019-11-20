@@ -1,28 +1,24 @@
 import React, { useState, useEffect } from "react";
 import axios from 'axios'
 
+import useQuery from '../Hooks/useQuery'
 
 const List = () => {
   const [ characters, setCharacters ] = useState([])
 
-  useEffect(() => {
-    axios
-      .get("https://rickandmortyapi.com/api/character/")
-      .then(({ data: { results } }) => {
-        setCharacters(results)
-      })
-      .catch(error => {
-        console.log("Ocurrio algun error en el API", error)
-      })
-  }, []);
+  const { loading, data } = useQuery("https://rickandmortyapi.com/api/character/");
+
+  if (loading) return 'Loading....'
 
   return <div>
     {
-      characters.map((character) => {
-        return (<div>
-          <img src={character.image}/>
-          <p> {character.name} </p>
-        </div>)
+      data.results.map((character) => {
+        return (
+          <div>
+            <img src={character.image} />
+            <p> {character.name} </p>
+          </div>
+        );
       })
     }
   </div>
